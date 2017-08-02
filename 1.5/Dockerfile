@@ -4,7 +4,8 @@ FROM wodby/php:7.1
 ENV WEBGRIND_VER="1.5" \
     WEBGRIND_ROOT="${APP_ROOT}/vendor/jokkedk/webgrind"
 
-RUN apk add --update --no-cache --virtual .webgrind-rundeps graphviz && \
+RUN apk add --update --no-cache --virtual .webgrind-rundeps graphviz python3 && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
     apk add --update --no-cache --virtual .build-deps g++ && \
     su-exec www-data composer require jokkedk/webgrind:^${WEBGRIND_VER} && \
     cd "${WEBGRIND_ROOT}" && \
