@@ -18,4 +18,6 @@ WORKDIR "${WEBGRIND_ROOT}"
 COPY config.php.tpl /etc/gotpl/
 COPY init /docker-entrypoint-init.d/
 
+EXPOSE 8080
+
 CMD ["php", "-S", "0.0.0.0:8080", "index.php"]
