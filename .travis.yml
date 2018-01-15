@@ -1,37 +1,34 @@
-language: python
-
-sudo: required
+language: bash
 
 services:
   - docker
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.11.2
-    - LATEST_VERSION=1.5
+    - LATEST_TAG=1.5
+    - FROM_STABILITY_TAG=3.4.0
   matrix:
-    - VERSION=1.5
-
-install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+    - TAG=1.5 WEBGRIND_VER=1.5 PHP_VER=7.1
 
 script:
-  - cd ./$VERSION
   - make && make test
 
 after_success: |
-  if [ "$TRAVIS_PULL_REQUEST" == "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ -n "$TRAVIS_TAG" ]); then
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ("${TRAVIS_BRANCH}" == "master"  || -n "${TRAVIS_TAG}") ]]; then
+    docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
+    if [[ -n "${TRAVIS_TAG}" ]]; then
+      export STABILITY_TAG="${TRAVIS_TAG}"
+    fi
+
     make release
 
-    if [ -n "$TRAVIS_TAG" ]; then
-      make VERSION="$VERSION-$TRAVIS_TAG" release
-    fi
-
-    if [ "$VERSION" == "$LATEST_VERSION" ]; then
-      make VERSION=latest release
+    if [[ "${TAG}" == "${LATEST_TAG}" ]]; then
+      make release TAG="latest"
     fi
   fi
+
+notifications:
+  on_failure: never
+  slack:
+    secure: "n9iqp+0P1+Hq/+fdSvCcgqGl7Q055xBR/9qy+px0I++37dROakIRJjIQZ8KSF7uIMFYFF4Y01OkVP86+yAQbOZZh1Lzjl6TInYHyyJccBkUA0qwwsELW9ch+w1TCvus/bq4o/sEzcIeBxVTV1AmWaAoRGpyV6Hz1FWLI/3DfTZNY8mk6VmNUya1YSMYXpx5jSICWjAzhNuHwq7cIxIrJWb1h2cpxzY8AIv+gYXfu0XNNo+1DZczAII0DsCNMPBta/a8pM2AB+19BIGoE3mK8PN3P+B+/mHVVGLKmq+7HQudBX+FYwwY/+b+GUPuFbrhfHA4wbJ7ERim0as8dGimW9n4JjIY43IyVmA1hyoIhSyhESQNs6HthW8XaTv+u/Hh8qUqTWmXxyTIZpHYe/suStrTG/pDcyiLR8DE/KgUOUlQPlNYg9DC58nEU2SX9sPlnFnU97+N3ELbSrv+AkXryJF4UHoPGWe/dOsxzGNCvybdl8TCzr0kQq73kWyiAsPnohir7Cv/+vuHArzO7qU0mnBLiZ7gTmWKIc9a7pCn8A+ziceiDyu8vDIb310niFzechJU2wCWqC2dcZbun2ahK33snZ1y3Gx/YaOgozUPuQJFmHLg2rYo+O/Bm2/6NBJ++N7hTtWsPRor3wwSeGjwTASs0uQa2GhYubButZNX0f+4="
