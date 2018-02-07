@@ -1,17 +1,10 @@
 -include env_make
 
 WEBGRIND_VER ?= 1.5
-PHP_VER ?= 7.1
-
 TAG ?= $(WEBGRIND_VER)
-FROM_TAG = $(PHP_VER)
 
 REPO = wodby/webgrind
 NAME = webgrind-$(WEBGRIND_VER)
-
-ifneq ($(FROM_STABILITY_TAG),)
-    FROM_TAG := $(FROM_TAG)-$(FROM_STABILITY_TAG)
-endif
 
 ifneq ($(STABILITY_TAG),)
     ifneq ($(TAG),latest)
@@ -24,7 +17,7 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --build-arg FROM_TAG=$(FROM_TAG) --build-arg WEBGRIND_VER=$(WEBGRIND_VER) ./
+	docker build -t $(REPO):$(TAG) --build-arg WEBGRIND_VER=$(WEBGRIND_VER) ./
 
 test:
 	IMAGE=$(REPO):$(TAG) NAME=$(NAME) ./test.sh

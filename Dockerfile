@@ -1,6 +1,4 @@
-ARG FROM_TAG
-
-FROM wodby/php:${FROM_TAG}
+FROM wodby/php:7.1-3.6.0
 
 ARG WEBGRIND_VER
 
@@ -11,22 +9,24 @@ ENV WEBGRIND_VER="${WEBGRIND_VER}" \
     WEBGRIND_ROOT="${APP_ROOT}/vendor/jokkedk/webgrind"
 
 RUN set -ex; \
+    \
     apk add --update --no-cache --virtual .webgrind-rundeps graphviz python3; \
-    ln -s /usr/bin/python3 /usr/bin/python; \
     apk add --update --no-cache --virtual .build-deps g++; \
     \
-    su-exec www-data composer require jokkedk/webgrind:^${WEBGRIND_VER}; \
+    ln -s /usr/bin/python3 /usr/bin/python; \
+    su-exec www-data composer require "jokkedk/webgrind:^${WEBGRIND_VER}"; \
     cd "${WEBGRIND_ROOT}"; \
     make; \
     \
     apk del .build-deps; \
-    su-exec www-data composer clear-cache
+    su-exec www-data composer clear-cache; \
+    rm -rf /var/cache/apk/*
 
 USER www-data
 
 WORKDIR "${WEBGRIND_ROOT}"
 
-COPY config.php.tpl /etc/gotpl/
+COPY templates /etc/gotpl/
 COPY init /docker-entrypoint-init.d/
 COPY actions /usr/local/bin/
 
