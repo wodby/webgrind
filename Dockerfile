@@ -1,12 +1,14 @@
-FROM wodby/php:7.1-3.6.0
+ARG BASE_IMAGE_TAG
+
+FROM wodby/php:${BASE_IMAGE_TAG}
 
 ARG WEBGRIND_VER
-
-USER root
 
 # Actualize confih.php.tpl when updating version.
 ENV WEBGRIND_VER="${WEBGRIND_VER}" \
     WEBGRIND_ROOT="${APP_ROOT}/vendor/jokkedk/webgrind"
+
+USER root
 
 RUN set -ex; \
     \
@@ -14,15 +16,15 @@ RUN set -ex; \
     apk add --update --no-cache --virtual .build-deps g++; \
     \
     ln -s /usr/bin/python3 /usr/bin/python; \
-    su-exec www-data composer require "jokkedk/webgrind:^${WEBGRIND_VER}"; \
+    su-exec wodby composer require "jokkedk/webgrind:^${WEBGRIND_VER}"; \
     cd "${WEBGRIND_ROOT}"; \
     make; \
     \
-    apk del .build-deps; \
-    su-exec www-data composer clear-cache; \
+    apk del --purge .build-deps; \
+    su-exec wodby composer clear-cache; \
     rm -rf /var/cache/apk/*
 
-USER www-data
+USER wodby
 
 WORKDIR "${WEBGRIND_ROOT}"
 

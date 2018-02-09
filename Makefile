@@ -6,6 +6,9 @@ TAG ?= $(WEBGRIND_VER)
 REPO = wodby/webgrind
 NAME = webgrind-$(WEBGRIND_VER)
 
+PHP_VER ?= 7.1
+BASE_IMAGE_TAG = $(PHP_VER)
+
 ifneq ($(STABILITY_TAG),)
     ifneq ($(TAG),latest)
         override TAG := $(TAG)-$(STABILITY_TAG)
@@ -17,7 +20,10 @@ endif
 default: build
 
 build:
-	docker build -t $(REPO):$(TAG) --build-arg WEBGRIND_VER=$(WEBGRIND_VER) ./
+	docker build -t $(REPO):$(TAG) \
+		--build-arg BASE_IMAGE_TAG=$(BASE_IMAGE_TAG) \
+		--build-arg WEBGRIND_VER=$(WEBGRIND_VER) \
+		./
 
 test:
 	IMAGE=$(REPO):$(TAG) NAME=$(NAME) ./test.sh
