@@ -6,7 +6,7 @@ services:
 env:
   global:
     - LATEST_TAG=1.5
-    - BASE_IMAGE_STABILITY_TAG=4.0.0
+    - BASE_IMAGE_STABILITY_TAG=4.0.2
   matrix:
     - TAG=1.5 WEBGRIND_VER=1.5
 
