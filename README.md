@@ -18,7 +18,7 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-* `1.5`, `latest`  [_(Dockerfile)_](https://github.com/wodby/webgrind/tree/master/Dockerfile)
+* `1.5`, `1`, `latest`  [_(Dockerfile)_](https://github.com/wodby/webgrind/tree/master/Dockerfile)
 
 ## Environment Variables
 
