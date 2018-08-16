@@ -31,7 +31,7 @@ WORKDIR "${WEBGRIND_ROOT}"
 
 COPY templates /etc/gotpl/
 COPY init /docker-entrypoint-init.d/
-COPY actions /usr/local/bin/
+COPY bin /usr/local/bin/
 
 EXPOSE 8080
 
