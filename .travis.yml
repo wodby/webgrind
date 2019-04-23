@@ -1,13 +1,20 @@
 language: bash
 
 services:
-  - docker
+- docker
 
 env:
-  - WEBGRIND_VER=1.5 TAGS=1.5,1,latest
+- WEBGRIND_VER=1.5 TAGS=1.5,1,latest
 
 script:
-  - make && make test
+- make && make test
 
 after_success:
-  - . "${TRAVIS_BUILD_DIR}/release.sh"
+- . "${TRAVIS_BUILD_DIR}/release.sh"
+
+notifications:
+  email:
+    recipients:
+    - travisci@wodby.com
+    on_success: never
+    on_failure: always
