@@ -7,7 +7,7 @@
 
 ## Docker Images
 
-!!! For better reliability we release images with stability tags (`wodby/webgrind:1.5-X.X.X`) which correspond to [git tags](https://github.com/wodby/webgrind/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
+!!! For better reliability we release images with stability tags (`wodby/webgrind:1.6-X.X.X`) which correspond to [git tags](https://github.com/wodby/webgrind/releases). We **STRONGLY RECOMMEND** using images only with stability tags. 
 
 Overview:
 
@@ -18,7 +18,7 @@ Overview:
 
 Supported tags and respective `Dockerfile` links:
 
-* `1.5`, `1`, `latest`  [_(Dockerfile)_](https://github.com/wodby/webgrind/tree/master/Dockerfile)
+* `1.6`, `1`, `latest`  [_(Dockerfile)_](https://github.com/wodby/webgrind/tree/master/Dockerfile)
 
 ## Environment Variables
 
