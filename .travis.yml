@@ -4,7 +4,7 @@ services:
 - docker
 
 env:
-- BASE_IMAGE_STABILITY_TAG=4.12.13
+- BASE_IMAGE_STABILITY_TAG=4.12.14
 - WEBGRIND_VER=1.6.1 TAGS=1.6,1,latest
 
 script:
