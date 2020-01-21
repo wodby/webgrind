@@ -5,7 +5,7 @@ services:
 
 env:
   global:
-  - BASE_IMAGE_STABILITY_TAG=4.13.2
+  - BASE_IMAGE_STABILITY_TAG=4.14.0
   - WEBGRIND_VER=1.6.1 TAGS=1.6,1,latest
 
 script:
