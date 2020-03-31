@@ -6,7 +6,7 @@ services:
 env:
   global:
   - BASE_IMAGE_STABILITY_TAG=4.14.5
-  - WEBGRIND_VER=1.6.1 TAGS=1.6,1,latest
+  - WEBGRIND_VER=1.7.0 TAGS=1.7,1,latest
 
 script:
 - make && make test
