@@ -1,0 +1,25 @@
+name: Build docker image
+
+on:
+  push:
+    branches:
+    - master
+
+    tags:
+    - '*'
+
+env:
+  BASE_IMAGE_STABILITY_TAG: 4.17.1
+
+jobs:
+  webgrind-1:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions
+      with:
+        version: 1.7.0
+        tags: 1.7,1,latest
+        base_image_stability_tag: ${{ env.BASE_IMAGE_STABILITY_TAG }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
