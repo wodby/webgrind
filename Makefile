@@ -6,7 +6,7 @@ TAG ?= $(WEBGRIND_VER)
 REPO = wodby/webgrind
 NAME = webgrind-$(WEBGRIND_VER)
 
-PHP_VER ?= 7.2
+PHP_VER ?= 7.4
 BASE_IMAGE_TAG = $(PHP_VER)
 
 ifneq ($(STABILITY_TAG),)

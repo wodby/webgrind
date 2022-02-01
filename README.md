@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/wodby/webgrind/workflows/Build%20docker%20image/badge.svg)](https://github.com/wodby/webgrind/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/wodby/webgrind.svg)](https://hub.docker.com/r/wodby/webgrind)
 [![Docker Stars](https://img.shields.io/docker/stars/wodby/webgrind.svg)](https://hub.docker.com/r/wodby/webgrind)
-[![Docker Layers](https://images.microbadger.com/badges/image/wodby/webgrind.svg)](https://microbadger.com/images/wodby/webgrind)
 
 ## Docker Images
 
@@ -23,7 +22,7 @@ Supported tags and respective `Dockerfile` links:
 ## Environment Variables
 
 | Variable                    | Default Value       | Description |
-| --------------------------- | ------------------- | ----------- |
+|-----------------------------|---------------------|-------------|
 | `WEBGRIND_STORAGE_DIR`      |                     |             |
 | `WEBGRIND_PROFILER_DIR`     | `/tmp`              |             |
 | `WEBGRIND_DEFAULT_TIMEZONE` | `Europe/Copenhagen` |             |
