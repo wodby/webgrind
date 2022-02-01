@@ -19,6 +19,8 @@ Supported tags and respective `Dockerfile` links:
 
 - `1.9`, `1`, `latest`  [_(Dockerfile)_](https://github.com/wodby/webgrind/tree/master/Dockerfile)
 
+All images built for `linux/amd64` and `linux/arm64`
+
 ## Environment Variables
 
 | Variable                    | Default Value       | Description |
