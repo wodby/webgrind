@@ -18,6 +18,7 @@ Overview:
 Supported tags and respective `Dockerfile` links:
 
 - `1.9`, `1`, `latest`  [_(Dockerfile)_](https://github.com/wodby/webgrind/tree/master/Dockerfile)
+- `1.9-alpine3.13`, `1-alpine3.13`, `alpine3.13`  [_(Dockerfile)_](https://github.com/wodby/webgrind/tree/master/Dockerfile)
 
 All images built for `linux/amd64` and `linux/arm64`
 
