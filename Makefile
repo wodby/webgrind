@@ -10,7 +10,7 @@ PLATFORM ?= linux/amd64
 
 PHP_VER ?= 7.4
 ALPINE_VER ?= 3.15
-BASE_IMAGE_TAG = $(PHP_VER)-alpine$(ALPINE_VER)
+BASE_IMAGE_TAG = $(PHP_VER)
 
 ifneq ($(STABILITY_TAG),)
     ifneq ($(TAG),latest)
