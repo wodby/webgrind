@@ -14,7 +14,7 @@ USER root
 RUN set -ex; \
     \
     apk add --update --no-cache --virtual .webgrind-rundeps graphviz python3; \
-    apk add --update --no-cache --virtual .build-deps g++; \
+    apk add --update --no-cache --virtual .build-deps g++ zlib-dev; \
     \
     ln -s /usr/bin/python3 /usr/bin/python; \
     su-exec wodby composer require "jokkedk/webgrind:^${WEBGRIND_VER}"; \
