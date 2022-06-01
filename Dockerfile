@@ -13,7 +13,7 @@ USER root
 
 RUN set -ex; \
     \
-    apk add --update --no-cache --virtual .webgrind-rundeps graphviz python3; \
+    apk add --update --no-cache --virtual .webgrind-rundeps graphviz python3 zlib; \
     apk add --update --no-cache --virtual .build-deps g++ zlib-dev; \
     \
     ln -s /usr/bin/python3 /usr/bin/python; \
