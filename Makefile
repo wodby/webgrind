@@ -1,6 +1,6 @@
 -include env_make
 
-WEBGRIND_VER ?= 1.9.1
+WEBGRIND_VER ?= 1.9.2
 TAG ?= $(WEBGRIND_VER)
 
 REPO = wodby/webgrind
