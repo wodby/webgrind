@@ -39,7 +39,7 @@ class Webgrind_Config extends Webgrind_MasterConfig {
     /**
      * Path to python executable
      */
-    static $pythonExecutable = '/usr/bin/python';
+    static $pythonExecutable = '/usr/bin/python3';
 
     /**
      * Path to graphviz dot executable
@@ -53,7 +53,26 @@ class Webgrind_Config extends Webgrind_MasterConfig {
      */
     static $fileUrlFormat = 'index.php?op=fileviewer&file=%1$s#line%2$d'; // Built in fileviewer
     //static $fileUrlFormat = 'txmt://open/?url=file://%1$s&line=%2$d'; // Textmate
+    //static $fileUrlFormat = 'vscode://file/%1$s:%2$d'; // VSCode
     //static $fileUrlFormat = 'file://%1$s'; // ?
+
+    /**
+     * Enable viewing of server files.
+     *
+     * Add whatever logic necessary to determine whether a visitor can
+     * access a particular file. Access is granted if this function returns
+     * a path to a readable file.
+     */
+    static function exposeServerFile($file) {
+        $orig_code_base_path = '{{ getenv "WEBGRIND_ORIG_CODEBASE_PATH" "/var/www/html" }}';
+        $mounted_codebase_path = '{{ getenv "MOUNTED_CODEBASE_PATH" "/mnt/codebase" }}';
+
+        if (substr($file, 0, strlen($orig_code_base_path)) === $orig_code_base_path) {
+            return str_replace($orig_code_base_path, $mounted_codebase_path, $file); // Grant access to all files on server.
+        }
+
+        return false;
+    }
 
     /**
      * format of the trace drop down list
@@ -107,11 +126,21 @@ class Webgrind_Config extends Webgrind_MasterConfig {
 
     /**
      * Directory to search for trace files
+     *
+     * @return string xdebug output directory
      */
     static function xdebugOutputDir() {
-        $dir = ini_get('xdebug.profiler_output_dir');
-        if ($dir=='') // Ini value not defined
-            return realpath(Webgrind_Config::$profilerDir).'/';
+        // grab the Xdebug 3 output dir value
+        $dir = ini_get('xdebug.output_dir');
+
+        // if it's empty, check the Xdebug 2 value
+        if (empty($dir))
+            $dir = ini_get('xdebug.profiler_output_dir');
+
+        // If it's still empty, fall back to webgrind config
+        if (empty($dir))
+            $dir = Webgrind_Config::$profilerDir;
+
         return realpath($dir).'/';
     }
 
@@ -140,20 +169,52 @@ class Webgrind_Config extends Webgrind_MasterConfig {
     static function getBinaryPreprocessor() {
         $localBin = __DIR__.'/bin/';
         $makeFailed = $localBin.'make-failed';
-        if (is_writable($localBin) && !file_exists($makeFailed)) {
-            $make = '/usr/bin/make';
-            if (is_executable($make)) {
-                $cwd = getcwd();
-                chdir(__DIR__);
-                exec($make, $output, $retval);
-                chdir($cwd);
-                if ($retval != 0) {
-                    touch($makeFailed);
-                }
+        if (PHP_OS == 'WINNT') {
+            $binary = $localBin.'preprocessor.exe';
+        } else {
+            $binary = $localBin.'preprocessor';
+        }
+
+        if (!file_exists($binary) && is_writable($localBin) && !file_exists($makeFailed)) {
+            if (PHP_OS == 'WINNT') {
+                $success = static::compileBinaryPreprocessorWindows();
             } else {
+                $success = static::compileBinaryPreprocessor();
+            }
+            if (!$success || !file_exists($binary)) {
                 touch($makeFailed);
             }
         }
-        return $localBin.'preprocessor';
+
+        return $binary;
+    }
+
+    static function compileBinaryPreprocessor() {
+        $make = '/usr/bin/make';
+        if (is_executable($make)) {
+            $cwd = getcwd();
+            chdir(__DIR__);
+            exec($make, $output, $retval);
+            chdir($cwd);
+            return $retval == 0;
+        }
+        return false;
+    }
+
+    static function compileBinaryPreprocessorWindows() {
+        if (getenv('VSAPPIDDIR')) {
+            $cwd = getcwd();
+            chdir(__DIR__);
+            exec('call "%VSAPPIDDIR%\..\Tools\vsdevcmd\ext\vcvars.bat" && nmake -f nmakefile', $output, $retval);
+            chdir($cwd);
+            return $retval == 0;
+        } elseif (getenv('VS140COMNTOOLS')) {
+            $cwd = getcwd();
+            chdir(__DIR__);
+            exec('call "%VS140COMNTOOLS%\vsvars32.bat" && nmake -f nmakefile', $output, $retval);
+            chdir($cwd);
+            return $retval == 0;
+        }
+        return false;
     }
 }

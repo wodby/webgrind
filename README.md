@@ -23,10 +23,12 @@ All images built for `linux/amd64` and `linux/arm64`
 
 ## Environment Variables
 
-| Variable                    | Default Value       | Description |
-|-----------------------------|---------------------|-------------|
-| `WEBGRIND_STORAGE_DIR`      |                     |             |
-| `WEBGRIND_PROFILER_DIR`     | `/tmp`              |             |
-| `WEBGRIND_DEFAULT_TIMEZONE` | `Europe/Copenhagen` |             |
+| Variable                      | Default Value       | Description |
+|-------------------------------|---------------------|-------------|
+| `WEBGRIND_STORAGE_DIR`        |                     |             |
+| `WEBGRIND_PROFILER_DIR`       | `/tmp`              |             |
+| `WEBGRIND_DEFAULT_TIMEZONE`   | `Europe/Copenhagen` |             |
+| `WEBGRIND_ORIG_CODEBASE_PATH` | `/var/www/html`     |             |
+| `MOUNTED_CODEBASE_PATH`       | `/mnt/codebase`     |             |
 
 See [wodby/php](https://github.com/wodby/php) for more variables
