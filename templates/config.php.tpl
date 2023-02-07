@@ -65,7 +65,7 @@ class Webgrind_Config extends Webgrind_MasterConfig {
      */
     static function exposeServerFile($file) {
         $orig_code_base_path = '{{ getenv "WEBGRIND_ORIG_CODEBASE_PATH" "/var/www/html" }}';
-        $mounted_codebase_path = '{{ getenv "MOUNTED_CODEBASE_PATH" "/mnt/codebase" }}';
+        $mounted_codebase_path = '{{ getenv "WEBGRIND_MOUNTED_CODEBASE_PATH" "/mnt/codebase" }}';
 
         if (substr($file, 0, strlen($orig_code_base_path)) === $orig_code_base_path) {
             return str_replace($orig_code_base_path, $mounted_codebase_path, $file); // Grant access to all files on server.
