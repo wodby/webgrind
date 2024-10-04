@@ -32,3 +32,7 @@ All images built for `linux/amd64` and `linux/arm64`
 | `WEBGRIND_MOUNTED_CODEBASE_PATH` | `/mnt/codebase`     |             |
 
 See [wodby/php](https://github.com/wodby/php) for more variables
+
+## Exposed ports
+
+This image exposes the port 8080 for the webgrind webserver.
