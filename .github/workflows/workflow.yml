@@ -24,6 +24,6 @@ jobs:
     - uses: docker/setup-buildx-action@v3
     - uses: ./.github/actions
       with:
-        version: '1.9.3'
+        version: '1.9.4'
         tags: 1.9,1,latest
         platform: linux/amd64,linux/arm64
