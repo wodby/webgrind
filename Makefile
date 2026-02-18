@@ -8,7 +8,7 @@ NAME = webgrind-$(WEBGRIND_VER)
 
 PLATFORM ?= linux/amd64
 
-PHP_VER ?= 8.1
+PHP_VER ?= 8.2
 BASE_IMAGE_TAG = $(PHP_VER)
 
 ifneq ($(STABILITY_TAG),)
