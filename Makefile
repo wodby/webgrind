@@ -1,5 +1,8 @@
 -include env_make
 
+# Accept legacy build arguments during the image revision transition.
+IMAGE_REVISION ?= $(STABILITY_TAG)
+
 WEBGRIND_VER ?= 1.9.4
 TAG ?= $(WEBGRIND_VER)
 
@@ -11,9 +14,11 @@ PLATFORM ?= linux/amd64
 PHP_VER ?= 8.2
 BASE_IMAGE_TAG = $(PHP_VER)
 
-ifneq ($(STABILITY_TAG),)
+ifneq ($(IMAGE_REVISION),)
     ifneq ($(TAG),latest)
-        override TAG := $(TAG)-$(STABILITY_TAG)
+        override TAG := $(TAG)-$(IMAGE_REVISION)
+    else
+        override TAG := $(IMAGE_REVISION)
     endif
 endif
 
