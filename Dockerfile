@@ -14,6 +14,9 @@ ENV WEBGRIND_VER="${WEBGRIND_VER}" \
 
 USER root
 
+# Refresh inherited security fixes when rebuilding this image.
+RUN apk upgrade --no-cache
+
 RUN set -ex; \
     \
     apk add --update --no-cache --virtual .webgrind-rundeps graphviz python3 zlib py3-graphviz; \
